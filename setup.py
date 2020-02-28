@@ -4,7 +4,7 @@ setup(
     packages = ['pyemi'],
     package_dir = {'pyemi': ''},
     package_data = {'pyemi': ['drivers/*.yaml']},
-    version = '0.2',
+    version = '0.3',
     license='MIT',
     description = 'Instrument drivers for EMC regulatory related tests and automation.',
     author = 'Jeremy Chinn',
