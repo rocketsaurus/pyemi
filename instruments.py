@@ -1,6 +1,7 @@
 import logging
 from pathlib import Path
 import time
+import glob
 
 import numpy as np
 import pandas as pd
@@ -9,7 +10,9 @@ import visa
 
 
 class BaseInstrument:
-    def __init__(self, resource=None, driver=None, log_level=logging.CRITICAL, timeout=3000, **kwargs):
+    driver_folder = Path(__file__).parent.absolute() / Path('drivers')
+
+    def __init__(self, resource=None, driver=None, log_level=logging.CRITICAL, **kwargs):
         if kwargs:
             for key, value in kwargs.items():
                 self.interface = key.upper()
@@ -21,25 +24,35 @@ class BaseInstrument:
         FORMAT = '[%(levelname)s]%(asctime)s - %(message)s'
         logging.basicConfig(level=log_level, format=FORMAT)
         logging.info(f'Resource string: {self.resource_string}')
-        
-        if driver:
-            yaml=YAML(typ='safe')
-            doc = Path(__file__).parent.absolute() / Path('drivers') / Path(driver)
-            if doc.exists():
-                logging.info(f'Driver file: {doc}')
-                self.commands = yaml.load(doc)
-            else:
-                logging.warning(f'Driver file does not exist: {doc}')
 
         self.rm = visa.ResourceManager()
         self.resource = self.rm.open_resource(self.resource_string)
-        self.resource.timeout = timeout
 
-        if 'write_termination' in self.commands:
-            self.resource.write_termination = self.commands['write_termination']
+        if driver:
+            self.load_driver(driver)
+    
+    def load_driver(self, driver_file):
+        yaml=YAML(typ='safe')
+        doc = self.driver_folder / Path(driver)
+        if doc.exists():
+            logging.info(f'Driver file: {doc}')
+            self.commands = yaml.load(doc)
+            if 'write_termination' in self.commands:
+                self.resource.write_termination = self.commands['write_termination']
+            if 'query_delay' in self.commands:
+                self.resource.query_delay = float(self.commands['query_delay'])
+        else:
+            logging.warning(f'Driver file does not exist: {doc}')
 
-        if 'query_delay' in self.commands:
-            self.resource.query_delay = float(self.commands['query_delay'])
+    def list_available_drivers(self):
+        drivers = glob.glob(str(self.driver_folder / Path('*.yaml')))
+        return [Path(f).name for f in drivers]
+
+    def __str__(self):
+        '''Returns instrument ID'''
+        idn = self.resource.query('*IDN?')
+        idn = idn.split(',')
+        return idn[0] + ' ' + idn[1]
 
     def __repr__(self):
         '''Returns instrument ID'''
@@ -580,6 +593,9 @@ class DualController(BaseInstrument):
         self.resource.write(command)
 
 if __name__ == "__main__":
+    sa = SpectrumAnalyzer(gpib=20)
+    print(sa.list_available_drivers())
+    '''
     # Tower/Turntable example
     controller = DualController(gpib=7, driver='emcenter.yaml', log_level=logging.DEBUG)
 
@@ -651,3 +667,4 @@ if __name__ == "__main__":
 
     # Close connection
     sa.resource.close()
+    '''
