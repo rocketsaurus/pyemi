@@ -1,0 +1,34 @@
+---
+#write_termination: '\n'
+query_delay: '0.5'
+device:
+  tower: 'A'
+  turntable: 'B'
+position:
+  set: '1%sSK %f\n'
+  get: '1%sCP?'
+acceleration:
+  set: '1%sACC %f\n'
+  get: '1%sACC?\n'
+speed:
+  set: '1%sS%f\n'
+  get: '1%sS?\n'
+scan:
+  set: '1%sSC\n'
+  get: '1%sSC?\n'
+cycle:
+  set: '1%sCY %f\n'
+  get: '1%sCY?\n'
+direction:
+  set: 
+    down: '1ADN\n'
+    up: '1AUP\n'
+    clockwise: '1BCW\n'
+    counterclockwise: '1BCC\n'
+    stop: '1%sST\n'
+  get: '1%sDIR?\n'
+polarity:
+  set: '1AP%s\n'
+  get: '1AP?\n'
+error:
+  get: '1%sERR?\n'

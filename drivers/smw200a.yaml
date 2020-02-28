@@ -1,0 +1,15 @@
+---
+frequency:
+  mode: ':FREQ:%s' # CW|FIXed, SWEep, LIST
+  discrete: 
+    set: ':FREQ %d %s'
+    get: ':FREQ?'
+output: 
+  set: 'OUTP %s'
+  get: 'OUTP?'
+level:
+  set: 'POW %s'
+  get: 'POW?'
+unit:
+  set: ':UNIT:POW %s' # V, DBUV, DBM
+  get: ':UNIT:POW?'

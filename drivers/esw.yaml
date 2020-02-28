@@ -1,0 +1,101 @@
+---
+language: 'SCPI'
+wait: '*WAI'
+display: 'SYST:DISP:UPD %s'
+marker:
+  state: 'CALC:MARK%d %s' # {marker integer} {ON (1) | OFF (0)}
+  max: 'CALC:MARK%d:MAX'
+  min: 'CALC:MARK%d:MIN'
+  frequency: 
+    set: 'CALC:MARK%d:X %d%s'
+    get: 'CALC:MARK%d:X?'
+  amplitude: 'CALC:MARK%d:Y?'
+  center: 'CALC:MARK%d:FUNC:CENT'
+input: 'INP:TYPE INPUT%d'
+mode: 'INST:SEL %s' # SAN (Spectrum analyzer) | REC (EMI Receiver)
+bargraph: 
+  reset: 'DISP:BARG:PHOL:RES'
+  current: 'TRAC? SINGLE'
+  max: 
+    set: 'DISP:BARG:PHOL %s' # ON (1) | OFF (0)
+    get: 'TRAC? PHOLD'
+  coupling: 'DISP:BARG:TCO %s' # ON (1) | OFF(0)
+  detector: 'DET:REC %s' # Takes up to 4 detectors comma separated AVER,CAV,CRMS,NEG,POS,QP,RMS
+format:
+  get: 'FORM?'
+  ascii: 'FORM ASC'
+  binary: 'FORM %s,%d' # {binary},{# of bits}
+trace:
+  mode: 
+    set: 'DISP:TRAC%d:MODE %s' # {trace} and {detector}, detector=MAX,MIN,AVER,BLAN,TRD,VIEW,WRIT
+    get: 'DISP:TRAC%d:MODE?'
+  detector: 
+    set: 'DET%d %s' # {trace} and {detector}, detector=AVER,CAV,CRMS,NEG,POS,QP,RMS
+    get: 'DET%d?'
+  values: 'TRAC? TRACE%d'
+amplitude:
+  units:
+    set: 'CALC:UNIT:POW %s'
+    get: 'CALC:UNIT:POW?'
+frequency:
+  center: 
+    set: 'FREQ:CENT %d%s' # {value} and {unit}
+    get: 'SENS:FREQ:CENT?'
+  start: 
+    set: 'FREQ:STAR %d%s' # {value} and {unit}
+    get: 'SENSE:FREQ:STAR?'
+  stop: 
+    set: 'FREQ:STOP %d%s' # {value} and {unit}
+    get: 'SENSE:FREQ:STOP?'
+  span:
+    set: 'FREQ:SPAN %d%s'
+    get: 'SENSE:FREQ:SPAN?'
+sweep:
+  time: 'SWE:TIME %d%s' # {value} and {unit}
+  mode:
+    continuous: 'INIT:CONT ON'
+    single: 'INIT:CONT OFF'
+  count: 
+    set: 'SWE:COUN %d'
+    get: 'SWE:COUN?'
+  points: 
+    set: 'SWE:POIN %d'
+    get: 'SWE:POIN?'
+rbw: 
+  set: 'BAND %d%s'
+  get: 'BAND?'
+vbw: 
+  set: 'BAND:VID %d%s'
+  get: 'BAND:VID?'
+scan:
+  continuous: 'INIT2:CONT ON'
+  single: 'INIT2:CONT OFF'
+  start: 'INIT2;*WAI'
+  pause: 'HOLD'
+  resume: 'INIT2:CONM;*WAI'
+  emi: 'INIT2:EMIT'
+  finals: 'INIT2:FME'
+  tdo: # Time domain
+    time: 'SCAN:TDOM %d %s' # {value} {units}
+    mode: 'FREQ:TDOP %s' # AUTO or DYNamic
+  mode: 'FREQ:MODE %s' # FIXed (CW) or SCAN (SWE) or TDOmain
+  rbw: 'SCAN%d:BAND:RES %d%s' # {scan range} {value}{units}
+  bars: 'SCAN%d:BARS %s' # {scan range} {ON (1) | OFF (0)}
+  attenuation: 
+    on: 'SCAN%d:INP:ATT:AUTO ON'
+    off: 'SCAN%d:INP:ATT:AUTO OFF'
+    value: 'SCAN%d:INP:ATT %sdB' # 0 to 79
+  preamp:
+    auto: 'SCAN%d:INP:GAIN:AUTO %s' # ON (1) | OFF (0)
+    state: 'SCAN%d:INP:GAIN:STAT %s' # ON (1) | OFF (0)
+  lna:
+    auto: 'SCAN%d:INP:GAIN:LNA:AUTO %s' # ON (1) | OFF (0)
+    state: 'SCAN%d:INP:GAIN:LNA:STAT %s' # ON (1) | OFF (0)
+  input: 'SCAN%d:INP:TYPE %s' # {INPUT1 or INPUT2}
+  name: 'SCAN%d:NAME "%s"'
+  ranges: 'SCAN%d:RANG:COUN %s' # 0 to 100
+  frequecy:
+    start: 'SCANds:STAR %d%s'
+    step: 'SCAN%d:STEP %d%s'
+    stop: 'SCAN%d:STOP %d%s'
+  time: 'SCAN%d:TIME %d %s' # {value} {units}
