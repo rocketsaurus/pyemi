@@ -33,7 +33,7 @@ class BaseInstrument:
     
     def load_driver(self, driver_file):
         yaml=YAML(typ='safe')
-        doc = self.driver_folder / Path(driver)
+        doc = self.driver_folder / Path(driver_file)
         if doc.exists():
             logging.info(f'Driver file: {doc}')
             self.commands = yaml.load(doc)
@@ -593,8 +593,8 @@ class DualController(BaseInstrument):
         self.resource.write(command)
 
 if __name__ == "__main__":
-    sa = SpectrumAnalyzer(gpib=20)
-    print(sa.list_available_drivers())
+    sa = SpectrumAnalyzer(gpib=20, driver='esw.yaml')
+    print(sa)
     '''
     # Tower/Turntable example
     controller = DualController(gpib=7, driver='emcenter.yaml', log_level=logging.DEBUG)
