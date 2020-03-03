@@ -202,6 +202,16 @@ class SpectrumAnalyzer(BaseInstrument):
         command.format(val)
         self.resource.write(command)
 
+    @property
+    def unit(self):
+        command = self.commands['amplitude']['units']['get']
+        return self.resource.query(command)
+
+    @unit.setter
+    def unit(self, val):
+        command = self.commands['amplitude']['units']['set'] % val
+        self.resource.write(command)
+
     def Trace(self, t):
         return self._Trace(t, self)
 
