@@ -44,4 +44,8 @@ m1.to_max()
 
 # Store amplitude
 y = m1.amplitude
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> c8efe54395c711b4164f2e2af4e4a4895baa95cb
