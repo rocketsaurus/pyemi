@@ -80,6 +80,26 @@ class SpectrumAnalyzer(BaseInstrument):
         self.resource.query('*ESR?')
 
     @property
+    def rbw(self):
+        command = self.commands['rbw']['get']
+        return int(self.resource.query(command))
+
+    @rbw.setter
+    def rbw(self, val):
+        command = self.commands['rbw']['set'] % val
+        self.resource.write(command)
+
+    @property
+    def vbw(self):
+        command = self.commands['vbw']['get']
+        return int(self.resource.query(command))
+
+    @vbw.setter
+    def vbw(self, val):
+        command = self.commands['vbw']['set'] % val
+        self.resource.write(command)
+
+    @property
     def amplitude_units(self):
         command = self.commands['amplitude']['units']['get']
         units = self.resource.query(command)
@@ -202,16 +222,6 @@ class SpectrumAnalyzer(BaseInstrument):
         command.format(val)
         self.resource.write(command)
 
-    @property
-    def unit(self):
-        command = self.commands['amplitude']['units']['get']
-        return self.resource.query(command)
-
-    @unit.setter
-    def unit(self, val):
-        command = self.commands['amplitude']['units']['set'] % val
-        self.resource.write(command)
-
     def Trace(self, t):
         return self._Trace(t, self)
 
@@ -295,7 +305,7 @@ class SpectrumAnalyzer(BaseInstrument):
         @property
         def amplitude(self):
             command = self.sa.commands['marker']['amplitude'] % self._marker
-            return self.sa.resource.query(command)
+            return float(self.sa.resource.query(command))
 
         def goto_max(self):
             '''Moves marker to maximum value'''
@@ -486,6 +496,10 @@ class DualController(BaseInstrument):
         super().__init__(**kwargs)
         self.device = 'tower'
 
+    def reset(self):
+        command = self.commands['reset'] % self._device
+        self.resource.write(command)
+
     @property
     def device(self):
         return self.readable_device
@@ -603,9 +617,16 @@ class DualController(BaseInstrument):
         self.resource.write(command)
 
 if __name__ == "__main__":
+    # Tower/Turntable example
+    controller = DualController(gpib=7, driver='emcenter.yaml', log_level=logging.DEBUG)
+    #controller.reset()
+    print(controller)
+    # Read device current position, default on object creation is tower
+    print(controller.position)
+    '''
     sa = SpectrumAnalyzer(gpib=20, driver='esw.yaml')
     print(sa)
-    '''
+    
     # Tower/Turntable example
     controller = DualController(gpib=7, driver='emcenter.yaml', log_level=logging.DEBUG)
 

@@ -1,12 +1,13 @@
 ---
 #write_termination: '\n'
 query_delay: '0.5'
+reset: '1%s*RST\n'
 device:
   tower: 'A'
   turntable: 'B'
 position:
   set: '1%sSK %f\n'
-  get: '1%sCP?'
+  get: '1%sCP?\n'
 acceleration:
   set: '1%sACC %f\n'
   get: '1%sACC?\n'
