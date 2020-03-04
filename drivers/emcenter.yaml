@@ -2,6 +2,7 @@
 #write_termination: '\n'
 query_delay: '0.1'
 reset: '1%s*RST'
+opc: '1%s*OPC?'
 device:
   tower: 'A'
   turntable: 'B'

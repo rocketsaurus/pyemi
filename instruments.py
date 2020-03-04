@@ -503,6 +503,13 @@ class DualController(BaseInstrument):
         command = self.commands['reset'] % self._device
         self.resource.write(command)
 
+    def opc(self):
+        command = self.commands['opc'] % self._device
+        opc = self.resource.query(command)
+        opc = opc.strip('OK')
+        opc = opc.strip('\n')
+        return int(opc)
+
     @property
     def device(self):
         return self.readable_device
