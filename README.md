@@ -1,4 +1,4 @@
-# emc-instrument-drivers
+# PyEMI
 Instrument drivers for EMC regulatory related tests and automation.
 
 There are many different spectrum analyzers, signal generators and turntable controllers available today each with their own variation of SCPI commands.
@@ -30,7 +30,7 @@ span = sa.span_frequency
 # Create trace object
 t2 = sa.Trace(2)
 
-# Set trace 2 to max holde
+# Set trace 2 to max hold
 t2.mode = 'MAXH'
 
 # Store trace data as a dataframe of frequency/amplitude
