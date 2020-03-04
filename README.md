@@ -6,7 +6,7 @@ There are many different spectrum analyzers, signal generators and turntable con
 In order to abstract away some of the variations between different models and manufacturers, pyemi was created.  With pyemi developers need only specify the model of the instrument from the available .yaml files.  The correct command is then chosen from the list of available commands.
 
 # Quick Start Guide
-'''
+```
 from pyemi import SpectrumAnalyzer
 
 # Create the analyzer object with connection id/interface
@@ -44,4 +44,4 @@ m1.to_max()
 
 # Store amplitude
 y = m1.amplitude
-'''
+```
