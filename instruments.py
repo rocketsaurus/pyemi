@@ -52,7 +52,10 @@ class BaseInstrument:
         '''Returns instrument ID'''
         idn = self.resource.query('*IDN?')
         idn = idn.split(',')
-        return idn[0] + ' ' + idn[1]
+        if len(idn) >= 2:
+            return idn[0] + ' ' + idn[1]
+        else:
+            return idn
 
     def __repr__(self):
         '''Returns instrument ID'''
@@ -617,12 +620,6 @@ class DualController(BaseInstrument):
         self.resource.write(command)
 
 if __name__ == "__main__":
-    # Tower/Turntable example
-    controller = DualController(gpib=7, driver='emcenter.yaml', log_level=logging.DEBUG)
-    #controller.reset()
-    print(controller)
-    # Read device current position, default on object creation is tower
-    print(controller.position)
     '''
     sa = SpectrumAnalyzer(gpib=20, driver='esw.yaml')
     print(sa)

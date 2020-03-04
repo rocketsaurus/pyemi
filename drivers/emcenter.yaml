@@ -1,35 +1,35 @@
 ---
 #write_termination: '\n'
-query_delay: '0.5'
-reset: '1%s*RST\n'
+query_delay: '0.1'
+reset: '1%s*RST'
 device:
   tower: 'A'
   turntable: 'B'
 position:
-  set: '1%sSK %f\n'
-  get: '1%sCP?\n'
+  set: '1%sSK %f'
+  get: '1%sCP?'
 acceleration:
-  set: '1%sACC %f\n'
-  get: '1%sACC?\n'
+  set: '1%sACC %f'
+  get: '1%sACC?'
 speed:
-  set: '1%sS%f\n'
-  get: '1%sS?\n'
+  set: '1%sS%f'
+  get: '1%sS?'
 scan:
-  set: '1%sSC\n'
-  get: '1%sSC?\n'
+  set: '1%sSC'
+  get: '1%sSC?'
 cycle:
-  set: '1%sCY %f\n'
-  get: '1%sCY?\n'
+  set: '1%sCY %f'
+  get: '1%sCY?'
 direction:
   set: 
-    down: '1ADN\n'
-    up: '1AUP\n'
-    clockwise: '1BCW\n'
-    counterclockwise: '1BCC\n'
-    stop: '1%sST\n'
-  get: '1%sDIR?\n'
+    down: '1ADN'
+    up: '1AUP'
+    clockwise: '1BCW'
+    counterclockwise: '1BCC'
+    stop: '1%sST'
+  get: '1%sDIR?'
 polarity:
-  set: '1AP%s\n'
-  get: '1AP?\n'
+  set: '1AP%s'
+  get: '1AP?'
 error:
-  get: '1%sERR?\n'
+  get: '1%sERR?'
