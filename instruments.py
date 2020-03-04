@@ -226,8 +226,8 @@ class SpectrumAnalyzer(BaseInstrument):
             return self.sa.resource.query(command)
 
         @mode.setter
-        def mode(self):
-            command = self.sa.commands['trace']['mode']['set'] % self._trace
+        def mode(self, val):
+            command = self.sa.commands['trace']['mode']['set'] % (self._trace, val)
             self.sa.resource.write(command)
 
         @property
